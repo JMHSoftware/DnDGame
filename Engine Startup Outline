@@ -1,0 +1,9 @@
+1. Load config settings
+2. Init rendering system
+3. Show splash, maybe a progress bar
+4. Load spell/item files
+5. Load dialogue system
+6. Load sprites/models
+7. Load sounds
+8. Load menu elements
+9. Display menu

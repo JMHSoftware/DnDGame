@@ -1,0 +1,16 @@
+Engine requirements
+
+-----------------------------------
+
+- Load WAD files for maps?
+- Have a modularly loaded spell/item system
+- Branching dialogue/story
+- Perspective switching
+- 1st person weapon models
+- Player palette customisation
+- Day/Night cycle?
+- Load 3D models?
+- Map editor??????
+- Inventory management
+- FOV slider
+- Random dungeons

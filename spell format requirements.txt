@@ -1,0 +1,39 @@
+cast types:
+	Target
+		Self
+		Other
+		Object
+	Beam
+	Projectile
+
+spell types:
+	AOE
+	Aura
+	Summon [entities]
+	Conjure [items]
+	Buff
+	Debuff
+	Touch
+	
+Interaction types:
+	Damage
+	Imprison
+	
+Special Flags:
+	Piercing [keeps going when it hits something, for beam and projectile spells]
+	
+Damage Types:
+	Ice
+	Fire
+	Dark
+	Light
+	Energy
+	Piercing
+	Crushing
+	
+Example Spells:
+
+	Projectile:Summon[Mine:AOE:[Imprison]] (Shoots a projectile that, on impact, summons a landmine-type object that attempts to imprison entities that approach(think landmine+pokeball))
+	Beam[P]:Touch:Damage:[Dark,Energy] (Piercing dark energy beam)
+	
+	

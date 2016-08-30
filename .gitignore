@@ -2,6 +2,7 @@
 bin/
 .classpath
 .project
+lwjgl 3/
 
 # Windows image file caches
 Thumbs.db
