@@ -34,6 +34,7 @@ public class ProgressBar extends UIElement {
 		DnDGame.getGL().setDrawColor(0.5, 0.5, 0.5);
 		GL11.glBegin(GL11.GL_QUADS);
 		
+		GL11.glPushMatrix();
 		GL11.glColor3d(0.4, 0.4, 0.4);
 		GL11.glVertex2d(startX, startY);
 		GL11.glColor3d(0.4, 0.4, 0.4);
@@ -42,12 +43,12 @@ public class ProgressBar extends UIElement {
 		GL11.glVertex2d(endX, endY);
 		GL11.glColor3d(0.6, 0.6, 0.6);
 		GL11.glVertex2d(startX, endY);
-		
+		GL11.glPopMatrix();
 		GL11.glEnd();
 		
 		DnDGame.getGL().setDrawColor(0.5, 1, 0.5);
 		GL11.glBegin(GL11.GL_QUADS);
-		
+		GL11.glPushMatrix();
 		GL11.glColor3d(0.7, 1, 0.7);
 		GL11.glVertex2d(startX + padding, startY + padding);
 		GL11.glColor3d(0.7, 1, 0.7);
@@ -56,7 +57,7 @@ public class ProgressBar extends UIElement {
 		GL11.glVertex2d(startX + (fullLength * progress), endY - padding);
 		GL11.glColor3d(0.4, 1, 0.4);
 		GL11.glVertex2d(startX + padding, endY - padding);
-		
+		GL11.glPopMatrix();
 		GL11.glEnd();
 	}
 	

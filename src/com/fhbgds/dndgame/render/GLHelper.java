@@ -34,6 +34,14 @@ public class GLHelper {
 	long window;
 	String title = "";
 	
+	public int getWidth(){
+		return sizeX;
+	}
+	
+	public int getHeight(){
+		return sizeY;
+	}
+	
 	public GLHelper(){
 		this(800, 600);
 	}

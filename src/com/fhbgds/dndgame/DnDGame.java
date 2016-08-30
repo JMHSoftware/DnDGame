@@ -10,6 +10,7 @@ import com.fhbgds.dndgame.config.Configuration;
 import com.fhbgds.dndgame.config.ConfigurationManager;
 import com.fhbgds.dndgame.render.GLHelper;
 import com.fhbgds.dndgame.ui.ProgressBar;
+import com.fhbgds.dndgame.ui.Text;
 import com.fhbgds.dndgame.ui.UI;
 import com.fhbgds.dndgame.ui.UIElement;
 
@@ -31,6 +32,7 @@ public class DnDGame {
 		gl.initGL(Boolean.valueOf(video.getSettings().get("fullscreen")));
 		HashMap<String, UIElement> map = new HashMap<String, UIElement>();
 		map.put("progressBar1", new ProgressBar(100, 350, 1180, 370));
+		map.put("text1", new Text((gl.getWidth()/2)-80, 351, "Now Loading...").setSize(2).setColor(0, 0, 0));
 		ui = new UI(map);
 		
 	}
@@ -39,6 +41,7 @@ public class DnDGame {
 		float temp = 0;
 		gl.getReadyToDraw();
 		gl.clearColor(0, 0, 0, 1);
+		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		while(GLFW.glfwWindowShouldClose(gl.window()) == GL11.GL_FALSE){
 			temp += 0.001;
 			if(temp > 1) temp = 0;
