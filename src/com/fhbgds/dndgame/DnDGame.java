@@ -20,7 +20,7 @@ public class DnDGame {
 		int width = Integer.valueOf(video.getSettings().get("width")), height = Integer.valueOf(video.getSettings().get("height"));
 		gl = new GLHelper(width, height);
 		gl.setTitle("DnDGame");
-		gl.initGL();
+		gl.initGL(Boolean.valueOf(video.getSettings().get("fullscreen")));
 	}
 	
 	private void loop(){

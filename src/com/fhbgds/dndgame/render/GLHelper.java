@@ -49,7 +49,47 @@ public class GLHelper {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void initGL(){
+	public void initGL(boolean fullscreen){
+		if(fullscreen){
+			initGLFullscreen();
+		}else{
+			initGLWindowed();
+		}
+	}
+	
+	private void initGLFullscreen(){
+		if(glfwInit() != GL11.GL_TRUE) {
+			throw new IllegalStateException("Unable to initialize GLFW");
+		}
+
+		long monitor = GLFW.glfwGetPrimaryMonitor();
+		GLFWVidMode mode = glfwGetVideoMode(monitor);
+		GLFW.glfwWindowHint(GLFW.GLFW_RED_BITS, mode.getRedBits());
+		GLFW.glfwWindowHint(GLFW.GLFW_GREEN_BITS, mode.getGreenBits());
+		GLFW.glfwWindowHint(GLFW.GLFW_BLUE_BITS, mode.getBlueBits());
+		GLFW.glfwDefaultWindowHints();
+		GLFW.glfwWindowHint(GLFW.GLFW_REFRESH_RATE, mode.getRefreshRate());
+
+		window = glfwCreateWindow(sizeX, sizeY, title, monitor, NULL);
+		if(window == NULL) {
+			throw new RuntimeException("Failed to create the GLFW window");
+		}
+
+		 //Get the resolution of the primary monitor
+		 GLFWVidMode vidmode = glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+		 GLFW.glfwSetWindowPos(
+		 window,
+		 (vidmode.getWidth() - sizeX) / 2,
+		 (vidmode.getHeight() - sizeY) / 2
+		 );
+
+		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1);
+
+		glfwShowWindow(window);
+	}
+	
+	private void initGLWindowed(){
 		if(glfwInit() != GL11.GL_TRUE) {
 			throw new IllegalStateException("Unable to initialize GLFW");
 		}
