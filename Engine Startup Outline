@@ -1,4 +1,4 @@
-1. Load config settings
+1. Load video config settings -DONE-
 2. Init rendering system
 3. Show splash, maybe a progress bar
 4. Load spell/item files

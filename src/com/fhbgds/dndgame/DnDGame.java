@@ -3,6 +3,8 @@ package com.fhbgds.dndgame;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
+import com.fhbgds.dndgame.config.Configuration;
+import com.fhbgds.dndgame.config.ConfigurationManager;
 import com.fhbgds.dndgame.render.GLHelper;
 
 public class DnDGame {
@@ -14,7 +16,9 @@ public class DnDGame {
 	}
 	
 	private void init(){
-		gl = new GLHelper(800, 600);
+		Configuration video = ConfigurationManager.getVideoConfig();
+		int width = Integer.valueOf(video.getSettings().get("width")), height = Integer.valueOf(video.getSettings().get("height"));
+		gl = new GLHelper(width, height);
 		gl.setTitle("DnDGame");
 		gl.initGL();
 	}
@@ -24,6 +28,8 @@ public class DnDGame {
 		gl.clearColor(0, 0, 0, 1);
 		while(GLFW.glfwWindowShouldClose(gl.window()) == GL11.GL_FALSE){
 			gl.clear();
+			
+			
 			
 			GLFW.glfwSwapBuffers(gl.window());
 			GLFW.glfwPollEvents();
