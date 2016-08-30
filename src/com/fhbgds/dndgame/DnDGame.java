@@ -1,5 +1,6 @@
 package com.fhbgds.dndgame;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.util.HashMap;
 
@@ -31,8 +32,8 @@ public class DnDGame {
 		gl.setTitle("DnDGame");
 		gl.initGL(Boolean.valueOf(video.getSettings().get("fullscreen")));
 		HashMap<String, UIElement> map = new HashMap<String, UIElement>();
-		map.put("progressBar1", new ProgressBar(100, 350, 1180, 370));
-		map.put("text1", new Text((gl.getWidth()/2)-80, 351, "Now Loading...").setSize(2).setColor(0, 0, 0));
+		map.put("progressBar1", new ProgressBar(100, (gl.getHeight()/2)-10, gl.getWidth()-100, (gl.getHeight()/2)+10));
+		map.put("text1", new Text((gl.getWidth()/2)-80, (gl.getHeight()/2)-9, "Now Loading...").setSize(2).setColor(0, 0, 0));
 		ui = new UI(map);
 		
 	}
@@ -58,6 +59,7 @@ public class DnDGame {
 	}
 	
 	public static void main(String[] args){
+		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
 		new DnDGame();
 	}
 	
