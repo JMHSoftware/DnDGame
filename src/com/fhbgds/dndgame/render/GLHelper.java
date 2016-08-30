@@ -22,11 +22,13 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 public class GLHelper {
+	GLFWErrorCallback errorCallback;
 	
 	int sizeX, sizeY;
 	long window;
@@ -50,6 +52,10 @@ public class GLHelper {
 	}
 
 	public void initGL(boolean fullscreen){
+		GLFW.glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
+		if ( glfwInit() != GLFW.GLFW_TRUE ) {
+		    throw new IllegalStateException("Unable to initialize GLFW");
+		}
 		if(fullscreen){
 			initGLFullscreen();
 		}else{
@@ -58,10 +64,6 @@ public class GLHelper {
 	}
 	
 	private void initGLFullscreen(){
-		if(glfwInit() != GL11.GL_TRUE) {
-			throw new IllegalStateException("Unable to initialize GLFW");
-		}
-
 		long monitor = GLFW.glfwGetPrimaryMonitor();
 		GLFWVidMode mode = glfwGetVideoMode(monitor);
 		GLFW.glfwWindowHint(GLFW.GLFW_RED_BITS, mode.getRedBits());
@@ -75,7 +77,7 @@ public class GLHelper {
 			throw new RuntimeException("Failed to create the GLFW window");
 		}
 
-		 //Get the resolution of the primary monitor
+		 //Get the resolution of the primary monitor so we can center the window
 		 GLFWVidMode vidmode = glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
 		 GLFW.glfwSetWindowPos(
 		 window,
@@ -90,10 +92,6 @@ public class GLHelper {
 	}
 	
 	private void initGLWindowed(){
-		if(glfwInit() != GL11.GL_TRUE) {
-			throw new IllegalStateException("Unable to initialize GLFW");
-		}
-
 		long monitor = GLFW.glfwGetPrimaryMonitor();
 		GLFWVidMode mode = glfwGetVideoMode(monitor);
 		GLFW.glfwWindowHint(GLFW.GLFW_RED_BITS, mode.getRedBits());
@@ -148,6 +146,10 @@ public class GLHelper {
 	
 	public void clearColor(double r, double g, double b, double a){
 		glClearColor((float)r, (float)g, (float)b, (float)a);
+	}
+	
+	public void setDrawColor(double r, double g, double b){
+		GL11.glColor3d(r, g, b);
 	}
 	
 }
