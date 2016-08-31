@@ -22,13 +22,19 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import com.fhbgds.dndgame.DnDGame;
+
 public class GLHelper {
 	GLFWErrorCallback errorCallback;
+	GLFWCursorPosCallback posCallback;
+	GLFWMouseButtonCallback mouseButtonCallback;
 	
 	int sizeX, sizeY;
 	long window;
@@ -158,6 +164,23 @@ public class GLHelper {
 	
 	public void setDrawColor(double r, double g, double b){
 		GL11.glColor3d(r, g, b);
+	}
+	
+	public void setupMouseCallbacks(){
+		GLFW.glfwSetCursorPosCallback(window, (posCallback = GLFWCursorPosCallback.create((window, xpos, ypos) -> {
+			DnDGame.getGame().getUI().mouseX = xpos;
+			DnDGame.getGame().getUI().mouseY = ypos;
+		})));
+		
+		GLFW.glfwSetMouseButtonCallback(window, mouseButtonCallback = GLFWMouseButtonCallback.create((window, button, action, mods) -> {
+			if(action == GLFW.GLFW_RELEASE) DnDGame.getGame().getUI().processClick(button);
+		}));
+	}
+	
+	public void releaseCallbacks(){
+		mouseButtonCallback.release();
+		posCallback.release();
+		errorCallback.release();
 	}
 	
 }

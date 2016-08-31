@@ -1,24 +1,37 @@
 package com.fhbgds.dndgame;
 
 import java.io.File;
-import java.security.SecureRandom;
-import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import com.fhbgds.dndgame.config.Configuration;
 import com.fhbgds.dndgame.config.ConfigurationManager;
+import com.fhbgds.dndgame.enums.EnumLang;
 import com.fhbgds.dndgame.render.GLHelper;
 import com.fhbgds.dndgame.ui.ProgressBar;
-import com.fhbgds.dndgame.ui.Text;
+import com.fhbgds.dndgame.ui.Scenes;
 import com.fhbgds.dndgame.ui.UI;
-import com.fhbgds.dndgame.ui.UIElement;
+
+import javafx.beans.property.SimpleFloatProperty;
 
 public class DnDGame {
 	private static GLHelper gl;
 	private static UI ui;
-	private SecureRandom rand = new SecureRandom();
+	private EnumLang lang;
+	private static DnDGame instance;
+	SimpleFloatProperty progress = new SimpleFloatProperty();
+	public static DnDGame getGame(){
+		return instance;
+	}
+	
+	public EnumLang getLang(){
+		return this.lang;
+	}
+	
+	public UI getUI(){
+		return ui;
+	}
 
 	public DnDGame(){
 		init();
@@ -26,31 +39,32 @@ public class DnDGame {
 	}
 	
 	private void init(){
+		Configuration lang = new Configuration("lang").load();
+		this.lang = EnumLang.getFromString(lang.getSettings().get("lang"));
+		instance = this;
 		Configuration video = ConfigurationManager.getVideoConfig();
 		int width = Integer.valueOf(video.getSettings().get("width")), height = Integer.valueOf(video.getSettings().get("height"));
 		gl = new GLHelper(width, height);
 		gl.setTitle("DnDGame");
 		gl.initGL(Boolean.valueOf(video.getSettings().get("fullscreen")));
-		HashMap<String, UIElement> map = new HashMap<String, UIElement>();
-		map.put("progressBar1", new ProgressBar(100, (gl.getHeight()/2)-10, gl.getWidth()-100, (gl.getHeight()/2)+10));
-		map.put("text1", new Text((gl.getWidth()/2)-80, (gl.getHeight()/2)-9, "Now Loading...").setSize(2).setColor(0, 0, 0));
-		ui = new UI(map);
 		
-	}
-	
-	private void loop(){
-		float temp = 0;
+		ui = new UI(null);
+		
+		gl.setupMouseCallbacks();
 		gl.getReadyToDraw();
 		gl.clearColor(0, 0, 0, 1);
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+		Scenes.initScenes();
+		((ProgressBar) Scenes.menu.getElement("progressBar1")).progressProperty().bind(progress);
+	}
+	
+	private void loop(){
+		progress.set(0.1f);
+		ui.loadScene(Scenes.menu);
 		while(GLFW.glfwWindowShouldClose(gl.window()) == GL11.GL_FALSE){
-			temp += 0.001;
-			if(temp > 1) temp = 0;
+			if(progress.get() > 1) progress.set(0);
 			gl.clear();
 			
-			if(rand.nextFloat() > 0.9){
-				((ProgressBar) ui.getElement("progressBar1")).setProgress(temp);
-			}
 			ui.drawElements();
 			
 			GLFW.glfwSwapBuffers(gl.window());

@@ -51,14 +51,22 @@ public class ConfigurationManager {
 	}
 	
 	public static Map<String, String> loadDefaultSettings(String name){
+		Map<String, String> settings = new HashMap<String, String>();
 		switch(name){
 		case "video":
-			Map<String, String> settings = new HashMap<String, String>();
-		
 			settings.put("width", "800");
 			settings.put("height", "600");
 			settings.put("fullscreen", "false");
 		
+			return settings;
+		case "strings":
+			settings.put("logoText", "DnD Game");
+			settings.put("loadingText", "Now Loading...");
+		
+			return settings;
+		case "lang":
+			settings.put("lang", "en");
+			
 			return settings;
 		default:
 			return null;
