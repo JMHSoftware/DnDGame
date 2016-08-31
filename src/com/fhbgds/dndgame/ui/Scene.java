@@ -1,14 +1,11 @@
 package com.fhbgds.dndgame.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.lwjgl.opengl.GL13;
-
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.fhbgds.dndgame.DnDGame;
 import com.fhbgds.dndgame.io.TextLoader;
@@ -16,12 +13,12 @@ import com.fhbgds.dndgame.io.Textures;
 
 public class Scene {
 	String name;
-	HashMap<String, UIElement> elements;
+	LinkedHashMap<String, UIElement> elements;
 	Map<String, String> loadedStrings;
 	
 	public Scene(String name){
 		this.name = name;
-		this.elements = new HashMap<String, UIElement>();
+		this.elements = new LinkedHashMap<String, UIElement>();
 		this.loadedStrings = this.loadText(name);
 	}
 	
@@ -65,7 +62,7 @@ public class Scene {
 			}
 		}
 		for(UIElement e : texturedElements){
-			e.texID = Textures.decodePNGIntoTexture(e.texture.getName(), GL13.GL_TEXTURE0);
+			e.texID = Textures.decodePNGIntoTexture(e.texture.getName());
 		}
 	}
 }

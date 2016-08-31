@@ -46,6 +46,7 @@ public class Text extends UIElement{
 
 	public void localize(){
 		this.localizedText = parentScene.getLocalizedString(unlocalizedText);
+		if(this.localizedText == null || this.localizedText.isEmpty()) this.localizedText = this.unlocalizedText;
 	}
 	
 	@Override
@@ -85,7 +86,7 @@ public class Text extends UIElement{
 	}
 
 	@Override
-	public void click() {
+	public void click(int button, int action) {
 		
 	}
 }

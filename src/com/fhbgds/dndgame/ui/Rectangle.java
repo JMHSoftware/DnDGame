@@ -43,7 +43,7 @@ public class Rectangle extends UIElement{
 	}
 
 	@Override
-	public void click() {
+	public void click(int button, int action) {
 		
 	}
 

@@ -15,11 +15,12 @@ public class TexturedRectangle extends Rectangle {
 	
 	@Override
 	public void draw(){
+		
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texID);
 		GL11.glBegin(GL11.GL_QUADS);
 		
 //		GL11.glEnable(GL11.GL_BLEND);
 //		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texID);
 		
 		GL11.glColor3d(1, 1, 1);
 		
@@ -39,10 +40,9 @@ public class TexturedRectangle extends Rectangle {
 		
 		GL11.glPopMatrix();
 		
+		GL11.glEnd();
 //		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-		
-		GL11.glEnd();
 	}
 
 }
