@@ -1,10 +1,18 @@
 package com.fhbgds.dndgame.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.lwjgl.opengl.GL13;
+
+import java.util.Map.Entry;
 
 import com.fhbgds.dndgame.DnDGame;
 import com.fhbgds.dndgame.io.TextLoader;
+import com.fhbgds.dndgame.io.Textures;
 
 public class Scene {
 	String name;
@@ -44,5 +52,20 @@ public class Scene {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void loadTextures(){
+		Set<Entry<String, UIElement>> set = elements.entrySet();
+		List<UIElement> list = new ArrayList<UIElement>();
+		set.forEach(e -> list.add(e.getValue()));
+		List<UIElement> texturedElements = new ArrayList<UIElement>();
+		for(UIElement e: list){
+			if(e.hasTexture){
+				texturedElements.add(e);
+			}
+		}
+		for(UIElement e : texturedElements){
+			e.texID = Textures.decodePNGIntoTexture(e.texture.getName(), GL13.GL_TEXTURE0);
+		}
 	}
 }

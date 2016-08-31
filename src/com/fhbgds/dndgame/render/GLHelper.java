@@ -91,14 +91,6 @@ public class GLHelper {
 			throw new RuntimeException("Failed to create the GLFW window");
 		}
 
-		 //Get the resolution of the primary monitor so we can center the window
-		 GLFWVidMode vidmode = glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-		 GLFW.glfwSetWindowPos(
-		 window,
-		 (vidmode.getWidth() - sizeX) / 2,
-		 (vidmode.getHeight() - sizeY) / 2
-		 );
-
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1);
 

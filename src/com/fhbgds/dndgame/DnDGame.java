@@ -45,7 +45,7 @@ public class DnDGame {
 		Configuration video = ConfigurationManager.getVideoConfig();
 		int width = Integer.valueOf(video.getSettings().get("width")), height = Integer.valueOf(video.getSettings().get("height"));
 		gl = new GLHelper(width, height);
-		gl.setTitle("DnDGame");
+		gl.setTitle("Tales of Old");
 		gl.initGL(Boolean.valueOf(video.getSettings().get("fullscreen")));
 		
 		ui = new UI(null);
@@ -56,14 +56,22 @@ public class DnDGame {
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		Scenes.initScenes();
 		((ProgressBar) Scenes.menu.getElement("progressBar1")).progressProperty().bind(progress);
+		progress.set(0.1f);
+		ui.loadScene(Scenes.menu);
+		gl.clear();
+		GLFW.glfwSwapBuffers(gl.window());
+		Scenes.menu.loadTextures();
+		progress.set(0.2f);
+		gl.clear();
+		GLFW.glfwSwapBuffers(gl.window());
 	}
 	
 	private void loop(){
-		progress.set(0.1f);
-		ui.loadScene(Scenes.menu);
 		while(GLFW.glfwWindowShouldClose(gl.window()) == GL11.GL_FALSE){
 			if(progress.get() > 1) progress.set(0);
 			gl.clear();
+			
+			progress.set(progress.get() + 0.001f);
 			
 			ui.drawElements();
 			
