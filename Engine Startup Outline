@@ -1,6 +1,6 @@
 1. Load video config settings -DONE-
 2. Init rendering system -DONE-
-3. Show splash, maybe a progress bar
+3. Show splash -DONE-
 4. Load spell/item files
 5. Load dialogue system
 6. Load sprites/models

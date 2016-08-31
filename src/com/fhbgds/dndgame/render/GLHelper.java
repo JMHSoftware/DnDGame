@@ -22,15 +22,31 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import com.fhbgds.dndgame.DnDGame;
+
 public class GLHelper {
+	GLFWErrorCallback errorCallback;
+	GLFWCursorPosCallback posCallback;
+	GLFWMouseButtonCallback mouseButtonCallback;
 	
 	int sizeX, sizeY;
 	long window;
 	String title = "";
+	
+	public int getWidth(){
+		return sizeX;
+	}
+	
+	public int getHeight(){
+		return sizeY;
+	}
 	
 	public GLHelper(){
 		this(800, 600);
@@ -49,11 +65,39 @@ public class GLHelper {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void initGL(){
-		if(glfwInit() != GL11.GL_TRUE) {
-			throw new IllegalStateException("Unable to initialize GLFW");
+	public void initGL(boolean fullscreen){
+		GLFW.glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
+		if ( glfwInit() != GLFW.GLFW_TRUE ) {
+		    throw new IllegalStateException("Unable to initialize GLFW");
+		}
+		if(fullscreen){
+			initGLFullscreen();
+		}else{
+			initGLWindowed();
+		}
+	}
+	
+	private void initGLFullscreen(){
+		long monitor = GLFW.glfwGetPrimaryMonitor();
+		GLFWVidMode mode = glfwGetVideoMode(monitor);
+		GLFW.glfwWindowHint(GLFW.GLFW_RED_BITS, mode.getRedBits());
+		GLFW.glfwWindowHint(GLFW.GLFW_GREEN_BITS, mode.getGreenBits());
+		GLFW.glfwWindowHint(GLFW.GLFW_BLUE_BITS, mode.getBlueBits());
+		GLFW.glfwDefaultWindowHints();
+		GLFW.glfwWindowHint(GLFW.GLFW_REFRESH_RATE, mode.getRefreshRate());
+
+		window = glfwCreateWindow(sizeX, sizeY, title, monitor, NULL);
+		if(window == NULL) {
+			throw new RuntimeException("Failed to create the GLFW window");
 		}
 
+		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1);
+
+		glfwShowWindow(window);
+	}
+	
+	private void initGLWindowed(){
 		long monitor = GLFW.glfwGetPrimaryMonitor();
 		GLFWVidMode mode = glfwGetVideoMode(monitor);
 		GLFW.glfwWindowHint(GLFW.GLFW_RED_BITS, mode.getRedBits());
@@ -108,6 +152,27 @@ public class GLHelper {
 	
 	public void clearColor(double r, double g, double b, double a){
 		glClearColor((float)r, (float)g, (float)b, (float)a);
+	}
+	
+	public void setDrawColor(double r, double g, double b){
+		GL11.glColor3d(r, g, b);
+	}
+	
+	public void setupMouseCallbacks(){
+		GLFW.glfwSetCursorPosCallback(window, (posCallback = GLFWCursorPosCallback.create((window, xpos, ypos) -> {
+			DnDGame.getGame().getUI().mouseX = xpos;
+			DnDGame.getGame().getUI().mouseY = ypos;
+		})));
+		
+		GLFW.glfwSetMouseButtonCallback(window, mouseButtonCallback = GLFWMouseButtonCallback.create((window, button, action, mods) -> {
+			if(action == GLFW.GLFW_RELEASE) DnDGame.getGame().getUI().processClick(button);
+		}));
+	}
+	
+	public void releaseCallbacks(){
+		mouseButtonCallback.release();
+		posCallback.release();
+		errorCallback.release();
 	}
 	
 }
