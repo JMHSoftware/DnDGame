@@ -165,7 +165,7 @@ public class GLHelper {
 		})));
 		
 		GLFW.glfwSetMouseButtonCallback(window, mouseButtonCallback = GLFWMouseButtonCallback.create((window, button, action, mods) -> {
-			if(action == GLFW.GLFW_RELEASE) DnDGame.getGame().getUI().processClick(button);
+			DnDGame.getGame().getUI().processClick(button, action);
 		}));
 	}
 	

@@ -1,7 +1,7 @@
 package com.fhbgds.dndgame.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,7 +11,7 @@ public class UI {
 	
 	Scene loadedScene;
 	Map<String, String> loadedStrings;
-	HashMap<String, UIElement> loadedElements = new HashMap<String, UIElement>();
+	LinkedHashMap<String, UIElement> loadedElements = new LinkedHashMap<String, UIElement>();
 	
 	public volatile double mouseX, mouseY;
 	
@@ -21,7 +21,7 @@ public class UI {
 	
 	public void loadScene(Scene s){
 		if(s != null){
-			loadedElements = new HashMap<String, UIElement>();
+			loadedElements = new LinkedHashMap<String, UIElement>();
 			this.loadedElements.putAll(s.getElements());
 			this.loadedStrings = s.loadedStrings;
 			this.loadedScene = s;
@@ -33,15 +33,16 @@ public class UI {
 	}
 	
 	public void drawElements(){
-		for(Entry<String, UIElement> e : loadedElements.entrySet()){
-			if(!e.getValue().hidden){
-				e.getValue().draw();
+		for(String key : loadedElements.keySet()){
+			UIElement e = loadedElements.get(key);
+			if(!e.hidden){
+				e.draw();
 			}
 		}
 	}
 	
 	
-	public void processClick(int button){
+	public void processClick(int button, int action){
 		Set<Entry<String, UIElement>> set = loadedElements.entrySet();
 		List<UIElement> list = new ArrayList<UIElement>();
 		set.forEach(e -> list.add(e.getValue()));
@@ -62,7 +63,7 @@ public class UI {
 			if(mouseX < x || mouseX > x1) inside = false;
 			if(mouseY < y || mouseY > y1) inside = false;
 			if(inside){
-				e.click();
+				if(!e.hidden) e.click(button, action);
 			}
 		}
 	}

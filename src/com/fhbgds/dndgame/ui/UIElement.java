@@ -31,5 +31,5 @@ public abstract class UIElement {
 	
 	public abstract void draw();
 	
-	public abstract void click();
+	public abstract void click(int button, int action);
 }
