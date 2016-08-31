@@ -37,6 +37,17 @@ public class Scenes {
 		exitButton.setTextTexture(new Resource("textures", "exitText"));
 		menu.addElement("exitButton", exitButton);
 		
+		Button playButton = new Button(width/2 - 144, (height*.5)-36, width/2 + 144, (height*.5) + 36, "playText", menu);
+		playButton.setColor(0.5, 0.5, 0.5);
+		playButton.setHidden(true);
+		playButton.setClickBehavior(new Runnable(){
+			public void run(){
+				
+			}
+		});
+		playButton.setTextTexture(new Resource("textures", "playText"));
+		menu.addElement("playButton", playButton);
+		
 		Rectangle centerline = new Rectangle(width/2-4, 0, width/2, height, menu).setColor(0, 1, 0);
 		centerline.setHidden(true);
 		menu.addElement("centerLine", centerline);
@@ -46,10 +57,14 @@ public class Scenes {
 		text.setXY((width/2)-(size/2) + text.getScale(), (height/2) - 7);
 		menu.addElement("loadingText", text);
 		
-		Text text1 = new Text("logoText", menu).setSize(8).setColor(0, 0, 0);
-		size = text1.getDisplayWidth();
-		text1.setXY((width/2 - (size/2)) + text1.getScale(), (height/4) - 7);
-		menu.addElement("logoText", text1);
+//		Text text1 = new Text("logoText", menu).setSize(8).setColor(0, 0, 0);
+//		size = text1.getDisplayWidth();
+//		text1.setXY((width/2 - (size/2)) + text1.getScale(), (height/4) - 7);
+//		menu.addElement("logoText", text1);
+		
+		TexturedRectangle logo = new TexturedRectangle(100, 100, width-100, 100 + height/3, menu, new Resource("textures", "logoText"));
+		menu.addElement("logo", logo);
+		
 		return menu;
 	}
 }

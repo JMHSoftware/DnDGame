@@ -79,6 +79,7 @@ public class DnDGame {
 				ui.loadedScene().getElement("exitButton").setHidden(false);
 				ui.loadedScene().getElement("progressBar1").setHidden(true);
 				ui.loadedScene().getElement("loadingText").setHidden(true);
+				ui.loadedScene().getElement("playButton").setHidden(false);
 				
 			}
 			gl.clear();
