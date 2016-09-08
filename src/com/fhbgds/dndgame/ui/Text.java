@@ -26,6 +26,7 @@ public class Text extends UIElement{
 	boolean centered = false;
 	Color textColor = Color.WHITE;
 	List<ConfigurableEffect> effects = new ArrayList<ConfigurableEffect>();
+	long timeOfLastLocalization;
 	
 	EnumLang currentLang = EnumLang.EN;
 	boolean localized = false;
@@ -46,6 +47,7 @@ public class Text extends UIElement{
 	
 	public void localize(){
 		if(this.localizable){
+			this.timeOfLastLocalization = this.parentScene.lastTimeOfLangUpdate;
 			this.localizedText = this.parentScene.getLocalizedString(unlocalizedText);
 		}else{
 			this.localizedText = this.unlocalizedText;
@@ -91,7 +93,7 @@ public class Text extends UIElement{
 	}
 	
 	public void reAlignText(){
-		if(!this.localized || this.currentLang != TalesOfOld.getGame().getLang()){
+		if(!this.localized || this.currentLang != TalesOfOld.getGame().getLang() || this.timeOfLastLocalization != this.parentScene.lastTimeOfLangUpdate){
 			this.localize();
 		}
 		if(this.centered){
@@ -122,7 +124,7 @@ public class Text extends UIElement{
 	
 	@Override
 	public void draw() {
-		if(!this.localized || this.currentLang != TalesOfOld.getGame().getLang()){
+		if(!this.localized || this.currentLang != TalesOfOld.getGame().getLang() || this.timeOfLastLocalization != this.parentScene.lastTimeOfLangUpdate){
 			this.localize();
 		}
 		

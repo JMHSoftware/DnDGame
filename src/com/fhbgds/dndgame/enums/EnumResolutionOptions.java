@@ -4,9 +4,12 @@ public enum EnumResolutionOptions {
 	sn1920x1080,
 	sn1280x720,
 	sn640x480,
+	sn1366x768,
+	ef1440x900,
 	ft1600x1200,
 	ft800x600,
 	ft400x300;
+//	uhd4k;
 	
 	public EnumResolutionOptions getNext(){
 		int indexOf = this.ordinal();
@@ -28,6 +31,12 @@ public enum EnumResolutionOptions {
 			return "1920 x 1080";
 		case sn640x480:
 			return "640 x 480";
+		case sn1366x768:
+			return "1366 x 768";
+		case ef1440x900:
+			return "1440 x 900";
+//		case uhd4k:
+//			return "3840 x 2160";
 		default:
 			return "ERROR";
 		}
@@ -47,6 +56,12 @@ public enum EnumResolutionOptions {
 			return sn1280x720;
 		case "640 x 480":
 			return sn640x480;
+		case "1366 x 768":
+			return sn1366x768;
+		case "1440 x 900":
+			return ef1440x900;
+//		case "3840 x 2160":
+//			return uhd4k;
 		default:
 			return null;
 		}

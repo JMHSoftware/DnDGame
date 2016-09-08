@@ -187,4 +187,8 @@ public class TalesOfOld {
 	public boolean isFullscreen(){
 		return this.isFullscreen;
 	}
+	
+	public void setLang(EnumLang lang){
+		this.lang = lang;
+	}
 }

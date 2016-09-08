@@ -1,3 +1,5 @@
-loadingText=Picking things up off the floor
-logoText=A Game
-exitText=leave me alone
+loadingText=Picking things up off the ground
+titleText=Some Kind of Game
+exitButtonText=Get Out
+playButtonText=We Goin
+videoSettingsButtonText=Lite-Brite Configuration

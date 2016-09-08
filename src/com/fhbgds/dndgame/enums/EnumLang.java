@@ -16,4 +16,21 @@ public enum EnumLang {
 		}
 		return EN;
 	}
+	
+	public EnumLang getNext(){
+		int indexOf = this.ordinal();
+		if(indexOf == EnumLang.values().length - 1) return EnumLang.values()[0];
+		return EnumLang.values()[indexOf + 1];
+	}
+	
+	public String getString(){
+		switch(this){
+		case EN:
+			return "English";
+		case TEST:
+			return "Test";
+		default:
+			return "ERROR";
+		}
+	}
 }
