@@ -2,7 +2,7 @@ package com.fhbgds.dndgame.ui;
 
 import org.lwjgl.opengl.GL11;
 
-import com.fhbgds.dndgame.DnDGame;
+import com.fhbgds.dndgame.TalesOfOld;
 
 import javafx.beans.property.SimpleFloatProperty;
 
@@ -22,17 +22,6 @@ public class ProgressBar extends UIElement {
 		this.fullLength = (this.endX - padding) - this.startX;
 	}
 	
-	/**
-	 * @param progress The precentage to set the bar to. Must be a value between 0 and 1.
-	 */
-	@Deprecated
-	public void setProgress(float progress){
-		if(progress < 0) progress = 0;
-		if(progress > 1) progress = 1;
-		this.progress = progress;
-		this.prog.set(progress);
-	}
-	
 	public SimpleFloatProperty progressProperty(){
 		return this.prog;
 	}
@@ -40,7 +29,7 @@ public class ProgressBar extends UIElement {
 	@Override
 	public void draw(){
 		this.progress = prog.get();
-		DnDGame.getGL().setDrawColor(0.5, 0.5, 0.5);
+		TalesOfOld.getGL().setDrawColor(0.5, 0.5, 0.5);
 		GL11.glBegin(GL11.GL_QUADS);
 		
 		GL11.glPushMatrix();
@@ -55,7 +44,7 @@ public class ProgressBar extends UIElement {
 		GL11.glPopMatrix();
 		GL11.glEnd();
 		
-		DnDGame.getGL().setDrawColor(0.5, 1, 0.5);
+		TalesOfOld.getGL().setDrawColor(0.5, 1, 0.5);
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glPushMatrix();
 		GL11.glColor3d(0.7, 1, 0.7);
@@ -68,6 +57,10 @@ public class ProgressBar extends UIElement {
 		GL11.glVertex2d(startX + padding, endY - padding);
 		GL11.glPopMatrix();
 		GL11.glEnd();
+	}
+
+	@Override
+	public void click(int button) {
 	}
 
 	@Override

@@ -4,7 +4,10 @@ bin/
 .project
 lwjgl 3/
 config/
-PNGDecoder.jar
+*.jar
+*.log
+dependancies/
+
 
 # Windows image file caches
 Thumbs.db

@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 public class TextLoader {
 	
 	public static Map<String, String> loadText(String name, String lang) throws Exception{
-		File stringsLoc = new File("data/" + lang + "/" + name +".lang");
+		File stringsLoc = new File("data/lang/" + lang + "/" + name +".lang");
 		Map<String, String> strings = new HashMap<String, String>();
 		
 		if(!stringsLoc.exists()){ throw new FileNotFoundException(stringsLoc.getName());}
