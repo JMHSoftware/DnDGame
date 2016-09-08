@@ -2,7 +2,7 @@ package com.fhbgds.dndgame.ui;
 
 import org.lwjgl.opengl.GL11;
 
-import com.fhbgds.dndgame.DnDGame;
+import com.fhbgds.dndgame.TalesOfOld;
 
 public class Rectangle extends UIElement{
 
@@ -25,7 +25,7 @@ public class Rectangle extends UIElement{
 	
 	@Override
 	public void draw(){
-		DnDGame.getGL().setDrawColor(0.5, 0.5, 0.5);
+		TalesOfOld.getGL().setDrawColor(0.5, 0.5, 0.5);
 		GL11.glBegin(GL11.GL_QUADS);
 		
 		GL11.glPushMatrix();
@@ -40,6 +40,11 @@ public class Rectangle extends UIElement{
 		GL11.glPopMatrix();
 		
 		GL11.glEnd();
+	}
+
+	@Override
+	public void click(int button) {
+		super.click(button);
 	}
 
 	@Override

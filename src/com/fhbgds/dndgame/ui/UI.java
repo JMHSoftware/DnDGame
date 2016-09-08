@@ -12,6 +12,7 @@ public class UI {
 	Scene loadedScene;
 	Map<String, String> loadedStrings;
 	LinkedHashMap<String, UIElement> loadedElements = new LinkedHashMap<String, UIElement>();
+	List<UIElement> clickables;
 	
 	public volatile double mouseX, mouseY;
 	
@@ -21,10 +22,20 @@ public class UI {
 	
 	public void loadScene(Scene s){
 		if(s != null){
+			s.loadTextures();
 			loadedElements = new LinkedHashMap<String, UIElement>();
 			this.loadedElements.putAll(s.getElements());
 			this.loadedStrings = s.loadedStrings;
 			this.loadedScene = s;
+			Set<Entry<String, UIElement>> set = loadedElements.entrySet();
+			List<UIElement> list = new ArrayList<UIElement>();
+			set.forEach(e -> list.add(e.getValue()));
+			clickables = new ArrayList<UIElement>();
+			for(UIElement e: list){
+				if(e.clickable){
+					clickables.add(e);
+				}
+			}
 		}
 	}
 	
@@ -33,25 +44,11 @@ public class UI {
 	}
 	
 	public void drawElements(){
-		for(String key : loadedElements.keySet()){
-			UIElement e = loadedElements.get(key);
-			if(!e.hidden){
-				e.draw();
-			}
-		}
+		this.loadedScene.draw();
 	}
 	
 	
 	public void processClick(int button, int action){
-		Set<Entry<String, UIElement>> set = loadedElements.entrySet();
-		List<UIElement> list = new ArrayList<UIElement>();
-		set.forEach(e -> list.add(e.getValue()));
-		List<UIElement> clickables = new ArrayList<UIElement>();
-		for(UIElement e: list){
-			if(e.clickable){
-				clickables.add(e);
-			}
-		}
 		for(UIElement e : clickables){
 			double x = e.startX;
 			double x1 = e.endX;
@@ -63,7 +60,7 @@ public class UI {
 			if(mouseX < x || mouseX > x1) inside = false;
 			if(mouseY < y || mouseY > y1) inside = false;
 			if(inside){
-				if(!e.hidden) e.click(button, action);
+				if(!e.getDisabled().get()) e.click(button, action);
 			}
 		}
 	}

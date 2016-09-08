@@ -14,7 +14,6 @@ public class Textures {
 	public static int decodePNGIntoTexture(String name){
 		ByteBuffer buf = null;
 		try {
-			System.out.println("Attempting to load \"" + name + ".png\"");
 		    InputStream in = new FileInputStream("textures/" + name + ".png");
 		    PNGDecoder decoder = new PNGDecoder(in);
 		     
@@ -36,7 +35,6 @@ public class Textures {
 		    
 		    GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, decoder.getWidth(), decoder.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
 		    
-		    System.out.println("Success, " + texId);
 		    return texId;
 		} catch (Exception e) {
 		    e.printStackTrace();
