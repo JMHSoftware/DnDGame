@@ -3,6 +3,7 @@ package com.fhbgds.dndgame.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fhbgds.dndgame.TalesOfOld;
 import com.fhbgds.dndgame.render.GLHelper;
 import com.fhbgds.dndgame.util.Resource;
 
@@ -56,6 +57,7 @@ public class Button extends Rectangle{
 		}
 		if(action == 1){
 			if(this.onClick != null){
+				TalesOfOld.getAL().playSound("click", 1f, 1f, false);
 				this.onClick.run();
 				this.pressed = false;
 			}

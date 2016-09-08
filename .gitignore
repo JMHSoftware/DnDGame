@@ -8,6 +8,8 @@ config/
 *.log
 dependancies/
 natives/
+*.png
+*.wav
 
 
 # Windows image file caches

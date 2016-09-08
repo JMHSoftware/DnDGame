@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 import org.lwjgl.BufferUtils;
 
-public class Util {
+public class IOUtil {
 
 	private static ByteBuffer resizeBuffer(ByteBuffer buffer, int newCapacity) {
 		ByteBuffer newBuffer = BufferUtils.createByteBuffer(newCapacity);
@@ -32,7 +32,7 @@ public class Util {
 			}
 		} else {
 			try (
-				InputStream source = Util.class.getClassLoader().getResourceAsStream(resource);
+				InputStream source = IOUtil.class.getClassLoader().getResourceAsStream(resource);
 				ReadableByteChannel rbc = Channels.newChannel(source)
 			) {
 				buffer = BufferUtils.createByteBuffer(bufferSize);

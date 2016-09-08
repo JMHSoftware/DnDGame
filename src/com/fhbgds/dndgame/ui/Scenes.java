@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.lwjgl.openal.AL10;
 import org.newdawn.slick.font.effects.OutlineEffect;
 
 import com.fhbgds.dndgame.TalesOfOld;
@@ -169,7 +170,7 @@ public class Scenes {
 		playButton.getDisabledProperty().set(true);
 		playButton.setClickBehavior(new Runnable(){
 			public void run(){
-				System.out.println("clicked");
+				System.out.println("clicked: " + AL10.alGetError());
 			}
 		});
 		menu.addElement("playButton", playButton);

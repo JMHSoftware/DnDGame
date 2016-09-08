@@ -1,8 +1,6 @@
 package com.fhbgds.dndgame.ui;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,6 +13,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import com.fhbgds.dndgame.TalesOfOld;
 import com.fhbgds.dndgame.io.TextLoader;
+import com.fhbgds.dndgame.render.GLHelper;
 import com.fhbgds.dndgame.util.Resource;
 
 public class Scene {
@@ -100,14 +99,13 @@ public class Scene {
 			if (e != null) {
 				BufferedInputStream in;
 				try {
-					in = new BufferedInputStream(
-							new FileInputStream(new File(e.textureLoc.getLocation() + "/" + e.textureLoc.getName() + ".png")));
+					in = new BufferedInputStream(GLHelper.class.getResourceAsStream(e.textureLoc.getLocation() + "/" + e.textureLoc.getName() + ".png"));//new FileInputStream(new File(e.textureLoc.getLocation() + "/" + e.textureLoc.getName() + ".png")));
 					e.texture = TextureLoader.getTexture("PNG", in);
 					if (e.hasAdditionalTextures()) {
 						List<Resource> resources = e.getAdditionalTextureLocations();
 						for (Resource r : resources) {
 							String id = r.getName();
-							in = new BufferedInputStream(new FileInputStream(new File(r.getLocation() + "/" + id + ".png")));
+							in = new BufferedInputStream(GLHelper.class.getResourceAsStream(r.getLocation() + "/" + id + ".png"));//new FileInputStream(new File(r.getLocation() + "/" + id + ".png")));
 							e.addTexture(id, TextureLoader.getTexture("PNG", in));
 						}
 					}

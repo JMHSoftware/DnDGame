@@ -14,6 +14,7 @@ import com.fhbgds.dndgame.config.ConfigurationManager;
 import com.fhbgds.dndgame.enums.EnumLang;
 import com.fhbgds.dndgame.enums.EnumResolutionOptions;
 import com.fhbgds.dndgame.render.GLHelper;
+import com.fhbgds.dndgame.sound.ALHelper;
 import com.fhbgds.dndgame.ui.ProgressBar;
 import com.fhbgds.dndgame.ui.Scenes;
 import com.fhbgds.dndgame.ui.UI;
@@ -23,6 +24,7 @@ import javafx.beans.property.SimpleFloatProperty;
 
 public class TalesOfOld {
 	
+	private static ALHelper al;
 	private static GLHelper gl;
 	private static UI ui;
 	private EnumLang lang;
@@ -54,10 +56,13 @@ public class TalesOfOld {
 	public TalesOfOld(){
 		init();
 		loop();
+		exit();
 	}
 	
 	private void init(){
 		try{
+			al = new ALHelper();
+			al.initAL();
 			this.baseFont = Font.createFont(Font.TRUETYPE_FONT, new File("data/DINEngschrift-Regular.ttf"));
 			
 			Configuration lang = new Configuration("lang").load();
@@ -105,6 +110,7 @@ public class TalesOfOld {
 	}
 	
 	private void loop() {
+		al.playSound("menu", 1f, 0.75f, true);
 		while(running){
 			if(progress.get() > 0.99){
 				progress.set(0);
@@ -168,12 +174,17 @@ public class TalesOfOld {
 		this.running = false;
 		Display.destroy();
 		Mouse.destroy();
+		al.killALData();
 		System.exit(0);
 	}
 	
 	public static void main(String[] args) throws Exception{
 		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
 		new TalesOfOld();
+	}
+	
+	public static ALHelper getAL(){
+		return al;
 	}
 	
 	public static GLHelper getGL(){
