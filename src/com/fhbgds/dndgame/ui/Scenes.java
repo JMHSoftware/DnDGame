@@ -3,8 +3,8 @@ package com.fhbgds.dndgame.ui;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.newdawn.slick.font.effects.OutlineEffect;
 
